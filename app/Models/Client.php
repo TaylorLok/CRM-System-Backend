@@ -8,10 +8,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Client extends Model
 {
+    use HasFactory, SoftDeletes;
 
     protected $fillable = ['uuid','first_name','last_name','id_number','dob','telephone','email_address','status'];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
-    use HasFactory;
-    use SoftDeletes;
 }
