@@ -21,9 +21,6 @@ class ClientFactory extends Factory
     public function definition()
     {
         return [
-            'user_id' => function(){
-                return \App\Models\User::factory()->create()->id;
-            },
             'uuid' => $this->faker->uuid(),
             'first_name' => $this->faker->firstName(),
             'last_name' => $this->faker->lastName(),
