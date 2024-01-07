@@ -26,7 +26,7 @@ class LoginController extends Controller
             return response()->json(['message' => 'Login Successful'], 200);
         }
 
-        return response()->json(['error' => 'Invalid Credentials'], 401);
+        return response()->json(['error' => 'Invalid Credentials, please check your email or password'], 401);
     }
 
     public function logout(Request $request)
