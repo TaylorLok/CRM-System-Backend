@@ -26,16 +26,12 @@ class ClientController extends Controller
             return response()->json($client, 200);
         }
 
-        return response()->json(['error' => 'Client not found'], 404);
+        return response()->json(['message' => 'Client not found'], 404);
     }
 
     //filter client base on first_name, last_name, email, telephone
     public function filter(Request $request)
     {
-        \Log::info('Inside the filter');
-
-        \Log::info(json_encode('Filter Request: '  . $request));
-
         $clients = Client::where('first_name', 'like', '%'.$request->search.'%')
             ->orWhere('last_name', 'like', '%'.$request->search.'%')
             ->orWhere('email_address', 'like', '%'.$request->search.'%')
@@ -44,6 +40,11 @@ class ClientController extends Controller
             ->get();
 
             \Log::info(json_encode('GOt Filter Request: '  . $clients));
+
+        if($clients->isEmpty()){
+            \Log::info($clients);
+            return response()->json(['message' => 'Client not found'], 404);
+        }
 
         return response()->json($clients, 200);
     }
@@ -158,7 +159,7 @@ class ClientController extends Controller
             return response()->json(['message' => 'Client deleted successfully'], 200);
         }
 
-        return response()->json(['error' => 'Client not found'], 404);
+        return response()->json(['message' => 'Client not found'], 404);
     }
 
 }
