@@ -50,6 +50,7 @@ class ClientController extends Controller
 
     public function save(Request $request)
     {
+        \Log::info('This is the request outside try ' .$request);
         try
         {
             $request->validate([
@@ -72,7 +73,9 @@ class ClientController extends Controller
                 'email_address.unique' => 'User with this email address already exists',
                 'id_number.unique' => 'User with this id number already exists',
             ]);
-    
+            
+            \Log::info('This is the request inside try ' .$request);
+
             $client = Client::create([
                 'uuid' => \Str::uuid(),
                 'first_name' => $request->first_name,
@@ -83,10 +86,14 @@ class ClientController extends Controller
                 'email_address' => $request->email_address,
             ]);
 
+            \Log::info('The request is saved ' .$request);
+
             return response()->json(['message' => 'Client added successfully', 'client' => $client], 201);
         }
         catch(\Illuminate\Validation\ValidationException $e)
         {
+            \Log::info($e);
+
             return response()->json(['errors' => $e->errors()], 422);
         }
         

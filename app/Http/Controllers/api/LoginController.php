@@ -23,7 +23,7 @@ class LoginController extends Controller
        
         if(Auth::attempt($credentials))
         {
-            return response()->json(['message' => 'Login Successful'], 200);
+            return response()->json(['message' => 'Login Successful','user' => Auth::user()], 200);
         }
 
         return response()->json(['error' => 'Invalid Credentials, please check your email or password'], 401);
